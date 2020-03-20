@@ -4,15 +4,15 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="card-body d-flex flex-column align-items-start">
-            <form class="col-md-12" id="run_auto_form">
+            <form class="col-md-12" id="run_auto_form" ng-submit="addUrl(originalUrl)">
                 <div class="form-group row">
-                    <label for="original_Url">Enter the original URL to Encode/Shorten</label>
-                    <input type="text" required ng-model="original_Url" class="form-control mb-2" id="original_Url" ng-disabled="!suite_module">
+                    <label for="originalUrl">Enter the original URL to Encode/Shorten</label>
+                    <input type="text" required ng-model="originalUrl" class="form-control mb-2" id="originalUrl">
                 </div>
 
                 <div class="form-group row float-right">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Get Shortened URL</button>
+                        <input type="submit" value="Get Shortened URL" name="savesuite" id="savesuite" class="btn btn-primary">
                     </div>
                 </div>
             </form>
