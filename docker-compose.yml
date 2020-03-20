@@ -1,0 +1,25 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - 80:80
+    depends_on:
+      - client
+  mongodb:
+    build:
+      context: ./services/mongodb
+      dockerfile: Dockerfile
+    container_name: mongoDB
+    ports:
+      - "27017:27017"
+  client:
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile
+    container_name: client
+    expose:
+      - 5000
