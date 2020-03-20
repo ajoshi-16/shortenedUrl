@@ -16,4 +16,4 @@ def create_url():
     This service handles the add URL requests
     """
 
-    return jsonify({'Status': 'Successfully Edited the User'}), 200
+    return jsonify({'shortLink': 'http://localhost:fkjsdfjd'}), 500
