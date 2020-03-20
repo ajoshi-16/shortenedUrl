@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import logging
 
 client = MongoClient("mongodb://mongoDB:27017")
-db = client.automation
+db = client.shortURL
 
 
 def create_app():
