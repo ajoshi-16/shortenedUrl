@@ -9,6 +9,7 @@ services:
       - 80:80
     depends_on:
       - client
+      - createshorturl
   mongodb:
     build:
       context: ./services/mongodb
@@ -16,6 +17,13 @@ services:
     container_name: mongoDB
     ports:
       - "27017:27017"
+  createshorturl:
+    build:
+      context: ./services/createshorturl
+      dockerfile: Dockerfile
+    container_name: createshorturl
+    expose:
+      - 5000
   client:
     build:
       context: ./services/client
