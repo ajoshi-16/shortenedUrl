@@ -31,3 +31,5 @@ dbo.createCollection( "url_store", {
         }
     }
 });
+
+db.auto_repo.createIndex( { "key": 1}, { unique: true } )
