@@ -5,8 +5,12 @@ dbo.createCollection( "url_store", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ["shortUrl","originalURL","usage_count","max_usage"],
+            required: ["key","shortUrl","originalURL","usage_count","max_usage"],
             properties: {
+                key: {
+                    bsonType: "string",
+                    description: "Must be string and is required"
+                },
                 shortUrl: {
                     bsonType: "string",
                     description: "Must be string and is required"

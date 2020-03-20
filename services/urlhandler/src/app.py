@@ -1,7 +1,7 @@
 #!/bin/env python
 """ This module implements the CreateURL Service """
 import logging
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, redirect
 from src import db
 from pymongo import errors
 from bson.json_util import dumps
@@ -21,12 +21,13 @@ def create_url():
     """
     letters_and_digits = string.ascii_letters + string.digits
     random_key = ''.join(random.choice(letters_and_digits) for i in range(RANDOM_KEY_LENGTH))
-    generated_short_url = 'http://localhost/'+random_key
+    generated_short_url = 'http://localhost/urlhandler?key='+random_key
     logging.info(generated_short_url)
 
     payload = {}
     try:
         request_payload = request.get_json()
+        payload['key'] = random_key
         payload['shortUrl'] = generated_short_url
         payload['originalURL'] = request_payload['originalUrl']
         payload['usage_count'] = 0
@@ -40,3 +41,17 @@ def create_url():
         return jsonify({'shortLink': generated_short_url}), 200
     except errors.OperationFailure:
         return jsonify({'Status': 'Failure to get sub module list'}), 500
+
+
+@createUrl_blueprint.route('/urlhandler', methods=['GET'])
+def get_url():
+    """
+        This service handles the add URL requests
+    """
+    key = request.args.get('key')
+    find_query = {
+        "key": key
+    }
+    cur_document = db.url_store.find_one(find_query)
+    forwarding_url = cur_document['originalURL']
+    return redirect(forwarding_url, code=301)
