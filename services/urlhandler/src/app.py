@@ -48,10 +48,17 @@ def get_url():
     """
         This service handles the add URL requests
     """
-    key = request.args.get('key')
-    find_query = {
-        "key": key
-    }
-    cur_document = db.url_store.find_one(find_query)
-    forwarding_url = cur_document['originalURL']
-    return redirect(forwarding_url, code=301)
+    try:
+        key = request.args.get('key')
+        find_query = {
+            "key": key
+        }
+    except KeyError:
+        return jsonify({'Status': 'Wrong Data Sent'}), 400
+
+    try:
+        cur_document = db.url_store.find_one(find_query)
+        forwarding_url = cur_document['originalURL']
+        return redirect(forwarding_url, code=301)
+    except errors.OperationFailure:
+        return jsonify({'Status': 'Failure to get sub module list'}), 500
